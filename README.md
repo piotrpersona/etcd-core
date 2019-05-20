@@ -1,6 +1,9 @@
 # etcd-core
 Core concepts of etcd
 
+The following document is meant to be presented
+using [mark.show](https://mark.show/#/) - Markdown visualisation tool.
+
 ---
 # etcd
 
