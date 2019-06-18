@@ -1,23 +1,102 @@
-# etcd-core
+## etcd
+
 Core concepts of etcd
 
-The following document is meant to be presented
-using [mark.show](https://mark.show/#/) - Markdown visualisation tool.
+> The following document is meant to be presented using [mark.show](https://mark.show/#/) - Markdown visualisation tool.
 
 ---
-# etcd
+## agenda
+
+1. Microservices
+2. Service discovery
+3. etcd architecture
+4. Leader election
+5. etcd API
+
+---
+## Microservices
+
+---
+### microservices
+
+* Approach of designing and running software to achieve high availability of a service
+
+* Each service has single responsibility
+
+* Each service should be easily scaled
+
+* Each service should run in a distributed fashion
+
+* Each service should be portable
+
+---
+### scalability
+
+* database scalability - data flow synchronization
+* server scalability - 12 factor applications pricinples
+
+---
+### container
+
+* A standardized unit of software
+
+* It contains only required dependencies
+
+* More lightweight than a Virtual Machine
+
+* Portable
+
+* Backed by container engine such as: docker, rkt
+
+* Managed by orchestration tools such as kubernetes
+
+---
+### service
+
+Set of instances serving single resource.
+
+For instance:
+* MongoDB cluster
+* Web server cluster
+
+---
+## Service discovery
+
+---
+### service discovery
+
+Discovering service facts such as: IP Address, port required to communicate with a service.
+
+The basic idea behind service discovery is for each new instance of a service (or an application) to be able to identify its current environment and store that information.
+
+---
+### service discovery flow
+
+Provider - consumer example
+
+1. Deploy provider - store it's environment in registry.
+1. Consumer requests registry to *discover* a provider.
+1. Proxy service will expose a provider with fixed address and redirect all requests from consumer.
+
+---
+### service discovery registry
+
+Since the discovery is often used in distributed system, registry needs to be scalable, fault tolerant and distributed among all nodes in the cluster.
+
+---
+### etcd
 
 is an open-source distributed key value store
 that provides shared configuration and service discovery for Container Linux clusters.
 
 ---
-# etcd
+### etcd
 
 runs on each machine in a cluster and gracefully handles leader election
 during network partitions and the loss of the current leader.
 
 ---
-# According to Github
+### According to Github
 
 etcd is a distributed reliable key-value store for the most critical data of a distributed system,
 with a focus on being:
@@ -28,40 +107,38 @@ with a focus on being:
 * Reliable: properly distributed using Raft algorithm
 
 ---
-# Container Linux
+### Use cases
 
-redefines the operating system as a smaller, more compact Linux distribution.
-Traditional distros package unused software that leads to dependency conflicts and needlessly increases the attack surface.
-
-Container Linux provides three essential tools:
-* container management
-* process management
-* service discovery (done with **etcd**)
-
----
-# Use case
-
-Store:
-* dbs connections
+* service discovery
+* storing dbs connections
 * cache settings
 * feature flags
 
 ---
-# Used by
+### Present in
 
 * kubernetes
-* OpenTable
-* Huawei
-* locksmith
-* vulcand
+* treafik
+* CoreDNS
+* openstack
+* skydive
 
 ---
-# Raft consensus algorithm
+## Architecture
+
+---
+### architecture
+
+* leader - follower
+* leader election using consensus algorithm
+
+---
+### Raft consensus algorithm
 
 Visualisation: https://raft.github.io/
 
 ---
-# Configure etcd
+### Configure etcd
 
 ```yaml
 # This config is meant to be consumed by the config transpiler, which will
@@ -87,7 +164,7 @@ etcd:
 * http client (curl, wget, postman...)
 
 ---
-# etcd write
+### etcd write
 
 Set a key `message` with value `Hello` can be done as:
 
@@ -112,7 +189,7 @@ $ curl -X PUT http://127.0.0.1:2379/v2/keys/message -d value="Hello"
 ```
 
 ---
-# etcd read
+### etcd read
 
 Read the value of message back:
 
@@ -121,7 +198,7 @@ $ etcdctl get /message
 Hello
 ```
 
-or 
+or
 
 ```json
 $ curl http://127.0.0.1:2379/v2/keys/message
@@ -137,7 +214,7 @@ $ curl http://127.0.0.1:2379/v2/keys/message
 ```
 
 ---
-# etcd delete
+### etcd delete
 
 ```bash
 $ etcdctl rm /message
@@ -158,7 +235,7 @@ $ curl -X DELETE http://127.0.0.1:2379/v2/keys/message
 ```
 
 ---
-# TTL
+### TTL
 
 ```json
 $ curl -X PUT http://127.0.0.1:2379/v2/keys/foo?ttl=20 -d value=bar
@@ -184,3 +261,8 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
   "index": 32
 }
 ```
+
+### Sources
+
+* [Service discovery in Microservices architecture](https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/)
+* [Service discovery tools](https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/)
