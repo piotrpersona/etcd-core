@@ -9,8 +9,8 @@ Core concepts of etcd
 
 1. Microservices
 2. Service discovery
-3. etcd architecture
-4. Leader election
+3. etcd overview
+4. Raft consensus algorithm
 5. etcd API
 
 ---
@@ -124,18 +124,96 @@ with a focus on being:
 * skydive
 
 ---
-## Architecture
-
----
 ### architecture
 
 * leader - follower
 * leader election using consensus algorithm
 
 ---
-### Raft consensus algorithm
+### etcd HA
 
-Visualisation: https://raft.github.io/
+Communication between etcd machines is handled via the **Raft consensus algorithm.**
+
+---
+### Consensus algorithm
+
+Consensus algorithms allow a collection of machines
+to work as a coherent group that can survive the failures of some of its members.
+
+---
+### Consensus algorithms
+
+* They ensure safety - they will never return an incorrect result
+* They are fully functional (available) as long as majority of the servers are running
+* They do not depend on timing to ensure the consistency of the logs: faulty clocks and extreme message delays can, at worst, cause availability problems.
+* In the common case, a command can complete as soon as a majority of the cluster has responded to a single round of remote procedure calls; a minority of slow servers need not impact overall system performance.
+
+---
+### Consensus design
+
+Replicated state machines are typically implemented
+using a replicated log.
+
+Each server stores a log containing a series of commands, which its
+state machine executes in order.
+
+Each log contains the same commands in the same order, so each state machine processes the same sequence of commands.
+
+---
+### Consensus flow
+
+1. The consensus module on a server receives commands from clients and adds them to its log.
+1. It communicates with the consensus modules on other servers to ensure that every log eventually contains the same requests in the same order, even if some servers fail.
+1. Once commands are properly replicated, each server’s state machine processes them in log order, and the outputs are returned to clients.
+
+As a result, the servers appear to form a single, highly reliable state machine.
+
+---
+### Raft
+
+#### Strong leader
+
+Raft uses a stronger form of leadership than other consensus algorithms. For example, log entries only flow from the leader to other servers.
+This simplifies the management of the replicated log
+and makes Raft easier to understand.
+
+---
+### Raft
+
+#### Leader election
+
+Raft uses randomized timers to elect leaders. This adds only a small amount of mechanism to the heartbeats already required for any consensus algorithm, while resolving conflicts simply and rapidly.
+
+---
+### Raft
+
+#### Membership changes
+
+Raft’s mechanism for changing the set of servers in the cluster uses a new joint consensus approach where the majorities of two different configurations overlap during transitions.
+This allows the cluster to continue operating normally during configuration changes.
+
+---
+### Raft flow
+
+1. Elect distinguished leader
+1. Give the leader complete responsibility for managing the replicated log.
+1. The leader accepts the log entries from the clients. Replicates them on the other servers
+
+---
+### Leader election
+
+Each machine can be in one of the following state:
+
+* Leader
+* Follower
+* Candidate
+
+![etcd leader election machine state image](https://github.com/piotrpersona/etcd-core/raw/master/raft-leader-election-machine-state.png)
+
+---
+### Raft visualisation
+
+https://raft.github.io/
 
 ---
 ### Configure etcd
@@ -157,7 +235,7 @@ etcd:
 ```
 
 ---
-# API
+## API
 
 * HTTP-based
 * etcdctl
@@ -264,5 +342,8 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 
 ### Sources
 
+* [etcd.io](https://etcd.io/)
+* [Official etcd documentation](https://etcd.io/docs/v3.3.12/)
 * [Service discovery in Microservices architecture](https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/)
 * [Service discovery tools](https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/)
+* [Raft consensus algorithm paper](https://raft.github.io/raft.pdf)
