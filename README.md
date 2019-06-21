@@ -340,7 +340,10 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 }
 ```
 
-### Sources
+---
+### External links
+
+The following document was made using below resources:
 
 * [etcd.io](https://etcd.io/)
 * [Official etcd documentation](https://etcd.io/docs/v3.3.12/)
