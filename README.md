@@ -103,7 +103,7 @@ with a focus on being:
 
 * Simple: well-defined, user-facing API (gRPC)
 * Secure: automatic TLS with optional client cert authentication
-* Fast: benchmarked 10,000 writes/sec
+* Fast: benchmarked 10,000 writes/sec - [benchmarks](https://etcd.io/docs/v3.3.12/benchmarks/etcd-3-demo-benchmarks/)
 * Reliable: properly distributed using Raft algorithm
 
 ---
@@ -216,7 +216,10 @@ Each machine can be in one of the following state:
 https://raft.github.io/
 
 ---
-### Configure etcd
+## etcd setup
+
+---
+### Configuration
 
 ```yaml
 # This config is meant to be consumed by the config transpiler, which will
