@@ -353,3 +353,4 @@ The following document was made using below resources:
 * [Service discovery in Microservices architecture](https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/)
 * [Service discovery tools](https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/)
 * [Raft consensus algorithm paper](https://raft.github.io/raft.pdf)
+* [Failure models](https://etcd.io/docs/v3.3.12/op-guide/failures/)
