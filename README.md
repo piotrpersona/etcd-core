@@ -8,10 +8,11 @@ Core concepts of etcd
 ## agenda
 
 1. Microservices
-2. Service discovery
-3. etcd overview
-4. Raft consensus algorithm
-5. etcd API
+1. Service discovery
+1. etcd overview
+1. Raft consensus algorithm
+1. etcd API
+1. Clustering
 
 ---
 ## Microservices
@@ -231,28 +232,6 @@ Each machine can be in one of the following state:
 https://raft.github.io/
 
 ---
-## etcd setup
-
----
-### Configuration
-
-```yaml
-# This config is meant to be consumed by the config transpiler, which will
-# generate the corresponding Ignition config. Do not pass this config directly
-# to instances of Container Linux.
-
-etcd:
-  name:                        my-etcd-1
-  listen_client_urls:          https://10.240.0.1:2379
-  advertise_client_urls:       https://10.240.0.1:2379
-  listen_peer_urls:            https://10.240.0.1:2380
-  initial_advertise_peer_urls: https://10.240.0.1:2380
-  initial_cluster:             my-etcd-1=https://10.240.0.1:2380,my-etcd-2=https://10.240.0.2:2380,my-etcd-3=https://10.240.0.3:2380
-  initial_cluster_token:       my-etcd-token
-  initial_cluster_state:       new
-```
-
----
 ## API
 
 * HTTP-based
@@ -356,6 +335,54 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
   "cause": "/foo",
   "index": 32
 }
+```
+
+---
+### etcd clustering
+
+*"five" is a typical number of servers, which allows the system to tolerate two failures.*
+
+---
+### Configuration
+
+```yaml
+# This config is meant to be consumed by the config transpiler, which will
+# generate the corresponding Ignition config. Do not pass this config directly
+# to instances of Container Linux.
+
+etcd:
+  name:                        my-etcd-1
+  listen_client_urls:          https://10.240.0.1:2379
+  advertise_client_urls:       https://10.240.0.1:2379
+  listen_peer_urls:            https://10.240.0.1:2380
+  initial_advertise_peer_urls: https://10.240.0.1:2380
+  initial_cluster:             my-etcd-1=https://10.240.0.1:2380,my-etcd-2=https://10.240.0.2:2380,my-etcd-3=https://10.240.0.3:2380
+  initial_cluster_token:       my-etcd-token
+  initial_cluster_state:       new
+```
+
+---
+### Clustering
+
+1. Start with initial cluster of nodes (minimum 3)
+```bash
+etcd ... --initial-cluster "instance1PeerURL,instance2PeerURL...instanceNPeerURL"
+```
+
+2. Add node
+
+```bash
+# on any node in a cluster
+etcdctl member add <name> <peerURL>
+
+# e.g.:
+ectdctl member add etcd5 http://etcd5:2380
+```
+
+3. On new member
+
+```bash
+etcd ... (Configuration stuff) --initial-cluster "peersURLs,<new member peer URL>"
 ```
 
 ---
