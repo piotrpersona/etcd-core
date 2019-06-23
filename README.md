@@ -58,6 +58,11 @@ Core concepts of etcd
 * Managed by orchestration tools such as kubernetes
 
 ---
+### container
+
+![container example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/container.svg?sanitize=true)
+
+---
 ### service
 
 Set of instances serving single resource.
