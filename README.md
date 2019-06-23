@@ -34,7 +34,7 @@ Core concepts of etcd
 ---
 ### microservices
 
-![microservices example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/microservices.svg?sanitize=true)
+![microservices example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/svg/microservices.svg?sanitize=true)
 
 ---
 ### scalability
@@ -60,7 +60,7 @@ Core concepts of etcd
 ---
 ### container
 
-![container example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/container.svg?sanitize=true)
+![container example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/svg/container.svg?sanitize=true)
 
 ---
 ### service
@@ -74,7 +74,7 @@ For instance:
 ---
 ## service discovery
 
-![service discrovery](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/service-discovery.svg?sanitize=true)
+![service discrovery](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/svg/service-discovery.svg?sanitize=true)
 
 ---
 ### service discovery
@@ -92,7 +92,7 @@ Provider - consumer example
 1. Consumer requests registry to *discover* a provider.
 1. Proxy service will expose a provider with fixed address and redirect all requests from consumer.
 
-![service discrovery flow](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/service-discovery-flow.svg?sanitize=true)
+![service discrovery flow](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/svg/service-discovery-flow.svg?sanitize=true)
 
 ---
 ### service discovery registry
@@ -224,7 +224,7 @@ Each machine can be in one of the following state:
 * Follower
 * Candidate
 
-![etcd leader election machine state](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/raft-machine-state.svg?sanitize=true)
+![etcd leader election machine state](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/svg/raft-machine-state.svg?sanitize=true)
 
 ---
 ### Raft visualisation
