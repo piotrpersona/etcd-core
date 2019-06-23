@@ -72,7 +72,9 @@ For instance:
 * Web server cluster
 
 ---
-## Service discovery
+## service discovery
+
+![service discrovery](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/service-discovery.svg?sanitize=true)
 
 ---
 ### service discovery
