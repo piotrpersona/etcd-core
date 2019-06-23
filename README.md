@@ -19,7 +19,9 @@ Core concepts of etcd
 ---
 ### microservices
 
-* Approach of designing and running software to achieve high availability of a service
+* Approach of designing and running software to achieve high availability of an application
+
+* Application is divided into multiple services
 
 * Each service has single responsibility
 
@@ -28,6 +30,11 @@ Core concepts of etcd
 * Each service should run in a distributed fashion
 
 * Each service should be portable
+
+---
+### microservices
+
+![microservices example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/microservices.svg)
 
 ---
 ### scalability
