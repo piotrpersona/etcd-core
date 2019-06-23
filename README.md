@@ -4,6 +4,8 @@ Core concepts of etcd
 
 > The following document is meant to be presented using [mark.show](https://mark.show/#/) - Markdown visualisation tool.
 
+Copy the content of [README.md](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/README.md) and paste it on the [mark.show](https://mark.show/#/) left pane.
+
 ---
 ## agenda
 
