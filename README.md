@@ -371,3 +371,4 @@ The following document was made using below resources:
 * [Raft consensus algorithm paper](https://raft.github.io/raft.pdf)
 * [Failure models](https://etcd.io/docs/v3.3.12/op-guide/failures/)
 * [etcd vs other KV-stores](https://etcd.io/docs/v3.3.12/learning/why/)
+* [etcd clustering with Rancher](https://rancher.com/blog/2019/2019-01-29-what-is-etcd/)
