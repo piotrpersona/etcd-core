@@ -34,7 +34,7 @@ Core concepts of etcd
 ---
 ### microservices
 
-![microservices example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/microservices.svg)
+![microservices example](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/microservices.svg?sanitize=true)
 
 ---
 ### scalability
