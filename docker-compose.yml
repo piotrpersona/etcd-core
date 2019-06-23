@@ -4,9 +4,15 @@
 version: '3'
 services:
   etcd0:
-    image: quay.io/coreos/etcd
+    image: etcd-operator
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: etcd0
     ports:
       - 2379
+    networks:
+      - etcd-cluster
     volumes:
       - etcd0:/etcd_data
     command:
@@ -26,9 +32,15 @@ services:
       - -initial-cluster
       - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
   etcd1:
-    image: quay.io/coreos/etcd
+    image: etcd-operator
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: etcd1
     ports:
       - 2379
+    networks:
+      - etcd-cluster
     volumes:
       - etcd1:/etcd_data
     command:
@@ -48,9 +60,15 @@ services:
       - -initial-cluster
       - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
   etcd2:
-    image: quay.io/coreos/etcd
+    image: etcd-operator
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: etcd2
     ports:
       - 2379
+    networks:
+      - etcd-cluster
     volumes:
       - etcd2:/etcd_data
     command:
@@ -69,17 +87,40 @@ services:
       - http://0.0.0.0:2380
       - -initial-cluster
       - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
-  etcd-browser:
-    build: ./etcd-browser
+  etcd3:
+    image: etcd-operator
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: etcd3
     ports:
-      - 8000
-    environment:
-      ETCD_HOST: etcd0
-      ETCD_PORT: 2379
-    depends_on:
-      - etcd0
-
+      - 2379
+    networks:
+      - etcd-cluster
+    volumes:
+      - etcd3:/etcd_data
+    command:
+      - /usr/local/bin/etcd
+      - -name
+      - etcd3
+      - -data-dir
+      - /etcd_data
+      - -advertise-client-urls
+      - http://etcd3:2379
+      - -listen-client-urls
+      - http://0.0.0.0:2379
+      - -initial-advertise-peer-urls
+      - http://etcd3:2380
+      - -listen-peer-urls
+      - http://0.0.0.0:2380
+      - -initial-cluster
+      - etcd3=http://etcd3:2380,etcd1=http://etcd1:2380,etcd0=http://etcd0:2380,etcd2=http://etcd2:2380"
+      - -initial-cluster-state
+      - existing
 volumes:
   etcd0:
   etcd1:
-etcd2:
+  etcd2:
+  etcd3:
+networks:
+  etcd-cluster:
