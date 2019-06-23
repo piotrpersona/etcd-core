@@ -92,6 +92,8 @@ Provider - consumer example
 1. Consumer requests registry to *discover* a provider.
 1. Proxy service will expose a provider with fixed address and redirect all requests from consumer.
 
+![service discrovery flow](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/service-discovery-flow.svg?sanitize=true)
+
 ---
 ### service discovery registry
 
