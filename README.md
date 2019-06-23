@@ -224,7 +224,7 @@ Each machine can be in one of the following state:
 * Follower
 * Candidate
 
-![etcd leader election machine state image](https://github.com/piotrpersona/etcd-core/raw/master/raft-leader-election-machine-state.png)
+![etcd leader election machine state](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/raft-machine-state.svg?sanitize=true)
 
 ---
 ### Raft visualisation
