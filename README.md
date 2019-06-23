@@ -354,3 +354,4 @@ The following document was made using below resources:
 * [Service discovery tools](https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/)
 * [Raft consensus algorithm paper](https://raft.github.io/raft.pdf)
 * [Failure models](https://etcd.io/docs/v3.3.12/op-guide/failures/)
+* [etcd vs other KV-stores](https://etcd.io/docs/v3.3.12/learning/why/)
