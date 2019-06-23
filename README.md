@@ -187,6 +187,9 @@ As a result, the servers appear to form a single, highly reliable state machine.
 ---
 ### Raft
 
+![Raft consensus model](https://raw.githubusercontent.com/piotrpersona/etcd-core/master/svg/raft-architecture.svg?sanitize=true)
+
+---
 #### Strong leader
 
 Raft uses a stronger form of leadership than other consensus algorithms. For example, log entries only flow from the leader to other servers.
@@ -194,15 +197,11 @@ This simplifies the management of the replicated log
 and makes Raft easier to understand.
 
 ---
-### Raft
-
 #### Leader election
 
 Raft uses randomized timers to elect leaders. This adds only a small amount of mechanism to the heartbeats already required for any consensus algorithm, while resolving conflicts simply and rapidly.
 
 ---
-### Raft
-
 #### Membership changes
 
 Raft’s mechanism for changing the set of servers in the cluster uses a new joint consensus approach where the majorities of two different configurations overlap during transitions.
