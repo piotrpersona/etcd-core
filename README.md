@@ -68,11 +68,14 @@ Copy the content of [README.md](https://raw.githubusercontent.com/piotrpersona/e
 ---
 ### service
 
-Set of instances serving single resource.
+Let's assume the following service definition:
+
+> Service - set of instances responsible for single service.
 
 For instance:
 * MongoDB cluster
 * Web server cluster
+* Auth service cluster
 
 ---
 ## service discovery
@@ -107,6 +110,13 @@ Since the discovery is often used in distributed system, registry needs to be sc
 
 is an open-source distributed key value store
 that provides shared configuration and service discovery for Container Linux clusters.
+
+---
+### etcd
+
+* **etc** - unix directory where configuration files persists, `/etc`
+
+* **d**istributed - shared among cluster of machines
 
 ---
 ### etcd
@@ -170,13 +180,11 @@ to work as a coherent group that can survive the failures of some of its members
 ---
 ### Consensus design
 
-Replicated state machines are typically implemented
-using a replicated log.
+* Replicated state machines are typically implemented using a replicated log.
 
-Each server stores a log containing a series of commands, which its
-state machine executes in order.
+* Each server stores a log containing a series of commands, which its state machine executes in order.
 
-Each log contains the same commands in the same order, so each state machine processes the same sequence of commands.
+* Each log contains the same commands in the same order, so each state machine processes the same sequence of commands.
 
 ---
 ### Consensus flow
@@ -185,7 +193,7 @@ Each log contains the same commands in the same order, so each state machine pro
 1. It communicates with the consensus modules on other servers to ensure that every log eventually contains the same requests in the same order, even if some servers fail.
 1. Once commands are properly replicated, each server’s state machine processes them in log order, and the outputs are returned to clients.
 
-As a result, the servers appear to form a single, highly reliable state machine.
+> As a result, the servers appear to form a single, highly reliable state machine.
 
 ---
 ### Raft
@@ -209,6 +217,13 @@ Raft uses randomized timers to elect leaders. This adds only a small amount of m
 
 Raft’s mechanism for changing the set of servers in the cluster uses a new joint consensus approach where the majorities of two different configurations overlap during transitions.
 This allows the cluster to continue operating normally during configuration changes.
+
+---
+### Terms in Raft
+
+* Raft divides time into **terms** of arbitrary length.
+* Terms are numbered with consecutive integers.
+* Each term begins with an election, in which one or more candidates attempt to become leader.
 
 ---
 ### Raft flow
