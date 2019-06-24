@@ -395,7 +395,7 @@ etcdctl member add <name> <peerURL>
 ectdctl member add etcd5 http://etcd5:2380
 ```
 
-3. On new member
+On new member
 
 ```bash
 etcd ... (Configuration stuff) --initial-cluster "peersURLs,<new member peer URL>"
