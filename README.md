@@ -174,7 +174,6 @@ to work as a coherent group that can survive the failures of some of its members
 
 * They ensure safety - they will never return an incorrect result
 * They are fully functional (available) as long as majority of the servers are running
-* They do not depend on timing to ensure the consistency of the logs: faulty clocks and extreme message delays can, at worst, cause availability problems.
 * In the common case, a command can complete as soon as a majority of the cluster has responded to a single round of remote procedure calls; a minority of slow servers need not impact overall system performance.
 
 ---
